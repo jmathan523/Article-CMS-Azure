@@ -10,6 +10,7 @@ from FlaskWebProject import app, db
 from FlaskWebProject.forms import LoginForm, PostForm
 from flask_login import current_user, login_user, logout_user, login_required
 from FlaskWebProject.models import User, Post
+from FlaskWebProject import app_log
 import msal
 import uuid
 
@@ -66,14 +67,14 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            app.logger.error('Invalid username or password')
+            app_log.error('Invalid username or password')
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
-        app.logger.info('Logged in successfully')
+        app_log.info('Logged in successfully')
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
@@ -112,7 +113,7 @@ def logout():
         return redirect(
             Config.AUTHORITY + "/oauth2/v2.0/logout" +
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
-    app.logger.info('Logout successful')
+    app_log.info('Logout successful')
     return redirect(url_for('login'))
 
 def _load_cache():
