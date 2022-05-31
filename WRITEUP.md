@@ -8,10 +8,23 @@ _For **both** a VM or App Service solution for the CMS app:_
 - _Choose the appropriate solution (VM or App Service) for deploying the app_
 - _Justify your choice_
 
-For this lightweight project which involves HTTP based service to host web application, I would prefer to go with App Service solution which is a PaaS(Platform as a Service) offering. The cloud service provider manages the underlying infrastructure such as Servers, networking, storage etc and also responsible for critical OS patches, updates and middleware components. Since the infrastrucure is being handled by cloud provider, the availability of the application will be on higher side (SLA 99.95%). Auto scaling is also possible in App service solution which depends on pricing tier we choose. Since, it can be able to configure with GitHub or other version controls, automated deployment is possible once the repository is committed with the changes.
+For this lightweight project which involves HTTP based service to host web application, I would prefer to go with App Service solution which is a PaaS(Platform as a Service) offering. The cloud service provider manages the underlying infrastructure such as Servers, networking, storage etc and also responsible for critical OS patches, updates and middleware components.
 
 Virtual machines on the other hand, is IaaS(Infrastructure as a Service) offering, where we have complete control over the development environment, easy to migrate legacy apps to cloud and can extend our on-premise datacenter.
-Availabilty of VM is same as that of App service and hence may not be an issue. Scalability of VM is possible and increases in hardware requirement based on the requirement may be expensive.
+
+Availability:
+In App Service, since the infrastrucure is being handled by cloud provider, the availability of the application will be on higher side, which is same as that in VM as well with SLA of 99.95% of the time.
+
+Workflow:
+Deployment process is fairely easy in App service when compared with VM, because in App service we can be able to configure the application with GitHub or other version controls, CI/CD pipeline configuration is possible to have automated deployment when the configured repo is committed with changes.
+
+Cost:
+When we compare Basic tier in App service (1 Core, 1.75GB, 10 GB Storage) with Basic tier in VM (1 vCPU, 1.75GB RAM, 40GB Storage) and with Linux based machine, the approx cost is $13.14 and $22.63 respectively. For this light weight application, it would be suffice to choose App service solution with Basic tier plan or Free tier plan when compared with VM.
+
+Scalability:
+Auto scale up and scale down is possible in both VM and App service solution. They also supports built in Auto scale features, integrated load balancer. But App service can be scaled upto the extend of 30 instances, 100 with App service environment whereas VM supports 1000 nodes per scale set for platform images and 600 nodes per scale set for custom images. Again for this lightweight CMS application, basic scaling with App service is suffice.
+
+Decision: Based on the above consideration, I would prefer to choose App Service Solution for this CMS application.
 
 ### Assess app changes that would change your decision.
 
