@@ -73,7 +73,7 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
-        app.logger.error('Logged in successfully')
+        app.logger.info('Logged in successfully')
         return redirect(next_page)
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
@@ -112,7 +112,7 @@ def logout():
         return redirect(
             Config.AUTHORITY + "/oauth2/v2.0/logout" +
             "?post_logout_redirect_uri=" + url_for("login", _external=True))
-        
+    app.logger.info('Logout successful')
     return redirect(url_for('login'))
 
 def _load_cache():
